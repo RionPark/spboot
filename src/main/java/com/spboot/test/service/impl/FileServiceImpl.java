@@ -43,8 +43,19 @@ public class FileServiceImpl implements FileService {
 		return fileRepo.save(fi);
 	}
 	
-	public List<FileInfo> getFileInfos(){
+	public List<FileInfo> getFileInfos(FileInfo fileInfo){
+		if(fileInfo.getFiiTitle()!=null && fileInfo.getFiiContent()!=null) {
+			return fileRepo.findAllByFiiTitleAndFiiContentContainsOrderByFiiNumAsc(fileInfo.getFiiTitle(), fileInfo.getFiiContent());
+
+		}
+		if(fileInfo.getFiiTitle()!=null) {
+			return fileRepo.findAllByFiiTitleOrderByFiiNumAsc(fileInfo.getFiiTitle());
+		}
+		if(fileInfo.getFiiContent()!=null) {
+			return fileRepo.findAllByFiiContentLikeOrderByFiiNumAsc("%" + fileInfo.getFiiContent() + "%");
+		}
 		return fileRepo.findAllByOrderByFiiNumAsc();
+		//select * from file_info where fii_title='검색어' order by fii_num asc
 	}
 
 	@Override

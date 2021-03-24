@@ -31,8 +31,9 @@ public class FileController {
 	}
 
 	@GetMapping("/file-infos")
-	public @ResponseBody List<FileInfo> getFileInfos(){
-		return fileService.getFileInfos();
+	public @ResponseBody List<FileInfo> getFileInfos(@ModelAttribute FileInfo fileInfo){
+		log.info("fileInfo=>{}",fileInfo);
+		return fileService.getFileInfos(fileInfo);
 	}
 	@GetMapping("/file-info")
 	public @ResponseBody FileInfo getFileInfos(@RequestParam Long fiiNum){

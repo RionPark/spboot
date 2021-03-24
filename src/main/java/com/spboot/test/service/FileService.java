@@ -7,6 +7,6 @@ import com.spboot.test.entity.FileInfo;
 public interface FileService {
 
 	FileInfo saveFileInfo(FileInfo fi);
-	public List<FileInfo> getFileInfos();
+	public List<FileInfo> getFileInfos(FileInfo fileInfo);
 	FileInfo getFileInfo(Long fiiNum);
 }
