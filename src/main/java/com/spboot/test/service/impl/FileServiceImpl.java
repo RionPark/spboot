@@ -3,6 +3,7 @@ package com.spboot.test.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,23 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public FileInfo getFileInfo(Long fiiNum) {
-		return fileRepo.getOne(fiiNum);
+		Optional<FileInfo> opFi = fileRepo.findById(fiiNum);
+		if(opFi.isEmpty()) return null;
+		return opFi.get();
+	}
+
+	@Override
+	public int deleteFileInfo(Long fiiNum) {
+		fileRepo.deleteById(fiiNum);
+		if(getFileInfo(fiiNum)==null) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public FileInfo updateFileInfo(FileInfo fi) {
+		return fileRepo.save(fi);
 	}
 
 }

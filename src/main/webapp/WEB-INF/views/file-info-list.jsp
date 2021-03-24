@@ -19,6 +19,7 @@
 	<tbody id="tBody">
 	</tbody>
 </table>
+<button onclick="location.href='/views/file-info-insert'">등록</button>
 <script>
 function search(){
 	var xhr = new XMLHttpRequest();

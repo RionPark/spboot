@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,20 +24,30 @@ public class FileController {
 	private FileService fileService; 
 	
 	@PostMapping("/file-info")
-	public String upload(@ModelAttribute FileInfo fi) {
-		log.info("@Slf4j어노테이션 이 있으면 log변수 자동으로 만들어줌");
+	public @ResponseBody Long upload(@ModelAttribute FileInfo fi) {
 		fi = fileService.saveFileInfo(fi);
-		log.info("fi=>{}",fi);
-		return "views/file-upload";
+		return fi.getFiiNum();
 	}
 
+	@PostMapping("/file-info/update")
+	public @ResponseBody Long update(@ModelAttribute FileInfo fi) {
+		fi = fileService.updateFileInfo(fi);
+		return fi.getFiiNum();
+	}
+	
 	@GetMapping("/file-infos")
 	public @ResponseBody List<FileInfo> getFileInfos(@ModelAttribute FileInfo fileInfo){
 		log.info("fileInfo=>{}",fileInfo);
 		return fileService.getFileInfos(fileInfo);
 	}
+	
 	@GetMapping("/file-info")
 	public @ResponseBody FileInfo getFileInfos(@RequestParam Long fiiNum){
 		return fileService.getFileInfo(fiiNum);
+	}
+	
+	@DeleteMapping("/file-info")
+	public @ResponseBody int deleteFileInfo(@RequestParam Long fiiNum) {
+		return fileService.deleteFileInfo(fiiNum);
 	}
 }

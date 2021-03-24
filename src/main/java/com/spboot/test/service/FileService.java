@@ -9,4 +9,6 @@ public interface FileService {
 	FileInfo saveFileInfo(FileInfo fi);
 	public List<FileInfo> getFileInfos(FileInfo fileInfo);
 	FileInfo getFileInfo(Long fiiNum);
+	int deleteFileInfo(Long fiiNum);
+	FileInfo updateFileInfo(FileInfo fi);
 }
