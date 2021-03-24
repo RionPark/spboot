@@ -11,11 +11,20 @@
 <form method="POST" enctype="multipart/form-data" action="/file-info">
 	<input type="text" name="fiiTitle"><br>
 	<textarea name="fiiContent"></textarea><br>
-	<input type="file" name="fiiFile" id="fiiFile"><br>
+	<input type="file" name="fiiFile" id="fiiFile" onchange="changeImg(this)"><br>
 	<div id="fiiFilePath"></div>
 	<button type="button" onclick="update()">수정</button>
 </form>
 <script>
+function changeImg(obj){
+	if(obj.files && obj.files[0]){
+		var reader = new FileReader();
+		reader.onload = function(e){
+			document.querySelector('#preview').src = e.target.result;
+		}
+		reader.readAsDataURL(obj.files[0]);
+	}
+}
 var fiiNum = '${param.fiiNum}';
 var objs = document.querySelectorAll('input[name],textarea[name]');
 function update(){
@@ -24,7 +33,7 @@ function update(){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState==4 && xhr.status==200){
 			if(xhr.responseText && xhr.responseText!=null){
-				alert('등록 완료');
+				alert('수정 완료');
 				location.href='/views/file-info-list';
 			}
 		}
@@ -33,6 +42,7 @@ function update(){
 	var fiiTitle = document.querySelector('[name=fiiTitle]');
 	var fiiContent = document.querySelector('[name=fiiContent]');
 	var fiiFile = document.querySelector('[name=fiiFile]');
+	formData.append('fiiNum',fiiNum);
 	formData.append('fiiTitle',fiiTitle.value);
 	formData.append('fiiContent',fiiContent.value);
 	formData.append('fiiFile',fiiFile.files[0]);

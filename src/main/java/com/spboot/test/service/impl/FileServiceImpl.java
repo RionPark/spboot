@@ -77,6 +77,22 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public FileInfo updateFileInfo(FileInfo fi) {
+		MultipartFile mf = fi.getFiiFile();
+		log.info("fileName=>{}",mf.getOriginalFilename());
+		int idx = mf.getOriginalFilename().lastIndexOf(".");
+		String extName = mf.getOriginalFilename().substring(idx);
+		String filePath = System.nanoTime() + extName;
+		log.info("filePath=>{}",filePath);
+		fi.setFiiFileName(mf.getOriginalFilename());
+		fi.setFiiFilePath(filePath);
+		File f = new File(ROOT + filePath);
+		try {
+			mf.transferTo(f);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return fileRepo.save(fi);
 	}
 
