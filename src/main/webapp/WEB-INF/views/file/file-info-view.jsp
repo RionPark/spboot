@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +26,11 @@
 		<th>이미지</th>
 		<td data-col="fiiFilePath" data-type="img"></td>
 	</tr>
+<c:if test="${customerInfo ne null}">
 	<tr>
-		<th colspan="2"><button onclick="location.href='/views/file-info-update?fiiNum=${param.fiiNum}'">수정</button> <button onclick="remove()">삭제</button></th>
+		<th colspan="2"><button onclick="location.href='/views/file/file-info-update?fiiNum=${param.fiiNum}'">수정</button> <button onclick="remove()">삭제</button></th>
 	</tr>
+</c:if>
 </table>
 <script>
 

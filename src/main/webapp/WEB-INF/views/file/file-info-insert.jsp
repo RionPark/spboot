@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${customerInfo eq null}">
+<script>
+	alert('사진 게시판 쓰기 권한이 없습니다.');
+	location.href='/views/user/login';
+</script>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
